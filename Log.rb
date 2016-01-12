@@ -1,9 +1,10 @@
 require 'json'
 
 class Game
-	attr_accessor :kills, :players, :total_kills
+	attr_accessor :kills, :players, :total_kills, :name
 
-	def initialize
+	def initialize(name)
+		@name = name
 		@total_kills = 0
 		@players = []
 		@kills = {}
@@ -37,6 +38,16 @@ class Game
 		end
 
 		return nil
+	end
+
+	def format
+		str = @name + ": {\n"
+		str += "	total_kills: " + @total_kills.to_s + ";\n"
+		str += "	players: " + @players.to_json + "\n"
+		str += "	kills: " + @kills.to_json + "\n"
+		str += "}"
+		
+		return str
 	end
 end
 
@@ -75,7 +86,8 @@ class Log
 	def read_log 
 		@log.each_line do |line|
 			if line.include? "InitGame"
-				@game = Game.new
+				name = "game_" + (@games.length + 1).to_s
+				@game = Game.new(name)
 			end
 
 			if line.include? "ClientUserinfoChanged"
@@ -124,10 +136,7 @@ class Log
 				game.kills[player.name] = player.kills
 			end
 
-			puts game.players
-			puts game.kills
-			puts game.total_kills
-			puts "--------------------"
+			puts game.format
 		end
 	end
 end
