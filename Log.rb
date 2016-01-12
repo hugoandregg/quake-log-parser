@@ -41,13 +41,23 @@ class Game
 	end
 
 	def format
-		str = @name + ": {\n"
-		str += "	total_kills: " + @total_kills.to_s + ";\n"
-		str += "	players: " + @players.to_json + "\n"
-		str += "	kills: " + @kills.to_json + "\n"
-		str += "}"
+		game = @name + ": {\n"
+		game += "	total_kills: " + @total_kills.to_s + ";\n"
+		game += "	players: " + @players.to_json + "\n"
+		game += "	kills: " + @kills.to_json + "\n"
+		game += "}"
 		
-		return str
+		return game
+	end
+
+	def ranking
+		kills = @kills.sort_by {|k, v| v}.reverse
+		ranking = "Ranking: \n"
+		kills.each do |player, kill|
+			ranking += player + " - " + kill.to_s + "\n"
+		end
+
+		return ranking
 	end
 end
 
@@ -137,6 +147,7 @@ class Log
 			end
 
 			puts game.format
+			puts game.ranking
 		end
 	end
 end
