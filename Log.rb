@@ -1,13 +1,15 @@
 require 'json'
+load 'Means.rb'
 
 class Game
-	attr_accessor :kills, :players, :total_kills, :name
+	attr_accessor :kills, :players, :total_kills, :name, :kills_by_means
 
 	def initialize(name)
 		@name = name
 		@total_kills = 0
 		@players = []
 		@kills = {}
+		@kills_by_means = {}
 	end
 
 	def add_kills
@@ -45,6 +47,7 @@ class Game
 		game += "	total_kills: " + @total_kills.to_s + ";\n"
 		game += "	players: " + @players.to_json + "\n"
 		game += "	kills: " + @kills.to_json + "\n"
+		game += "	kills_by_means: " + @kills_by_means.to_json + "\n"
 		game += "}"
 		
 		return game
@@ -130,6 +133,14 @@ class Log
 					@game.find_player_by_number(numbers[1]).minus_kill
 				else
 					@game.find_player_by_number(numbers[0]).add_kill
+				end
+				
+				numbers[2] = numbers[2].to_i
+				
+				if @game.kills_by_means.has_key?($means_of_death.key(numbers[2]))
+					@game.kills_by_means[$means_of_death.key(numbers[2])] += 1
+				else
+					@game.kills_by_means[$means_of_death.key(numbers[2])] = 1
 				end
 			end
 
