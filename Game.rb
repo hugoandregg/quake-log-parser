@@ -9,7 +9,7 @@ class Game
 		@kills_by_means = {}
 	end
 
-	def add_kills
+	def add_kill
 		@total_kills += 1
 	end
 

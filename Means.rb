@@ -24,5 +24,3 @@ $means_of_death = {
     MOD_TARGET_LASER: 21,
     MOD_TRIGGER_HURT: 22,
 }
-
-puts $means_of_death.key(22)

@@ -1,7 +1,7 @@
 class Player
 	attr_accessor :number, :name, :kills
 
-	def initialize(number, name="")
+	def initialize(number, name)
 		@number = number
 		@name = name
 		@kills = 0

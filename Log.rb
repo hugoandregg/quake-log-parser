@@ -4,6 +4,8 @@ load 'Game.rb'
 load 'Player.rb'
 
 class Log
+	attr_accessor :games
+
 	def initialize path 
 		raise ArgumentError unless File.exists? path
 		
@@ -41,10 +43,10 @@ class Log
 			end
 			
 			if line.include? "Kill"
-				@game.add_kills
+				@game.add_kill
 				numbers = line.partition("Kill:").last.scan(/\d+/)
 				
-				if numbers[0] == "1022"
+				if numbers[0].to_i == 1022
 					@game.find_player_by_number(numbers[1]).minus_kill
 				else
 					@game.find_player_by_number(numbers[0]).add_kill
@@ -77,7 +79,3 @@ class Log
 		end
 	end
 end
-
-log = Log.new(*ARGV)
-log.read_log
-log.emit
