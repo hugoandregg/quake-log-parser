@@ -7,14 +7,14 @@ class PlayerTest < Test::Unit::TestCase
 	end
 
 	def test_initialize
-		assert_equal(2, @player.number)
+		assert_equal(2, @player.id)
 		assert_equal("zeh", @player.name)
 		assert_equal(0, @player.kills)
 	end
 
-	def test_negative_number
+	def test_negative_id
 		player = Player.new(-2, "zeh")
-		assert_equal(-2, player.number)
+		assert_equal(-2, player.id)
 	end
 
 	def test_to_string

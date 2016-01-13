@@ -19,9 +19,9 @@ class Game
 		end
 	end
 
-	def find_player_by_number(number)
+	def find_player_by_id(id)
 		@players.each do |player|
-			if player.number == number
+			if player.id == id
 				return player
 			end
 		end

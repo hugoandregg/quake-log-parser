@@ -24,13 +24,13 @@ class Log
 				number = line.partition("ClientUserinfoChanged:").last[/\d+/]
 				name = line[/n\\(.*?)\\t\\/, 1]
 
-				player = @game.find_player_by_number(number)
+				player = @game.find_player_by_id(number)
 				if player
 					player.name = name unless player.name == name
 				else
 					player = @game.find_player_by_name(name)
 					if player
-						player.number = number
+						player.id = number
 					else
 						@game.players << Player.new(number, name)
 					end
@@ -39,7 +39,7 @@ class Log
 
 			if line.include? "ClientDisconnect"
 				number = line.partition("ClientDisconnect:").last[/\d+/]
-				@game.find_player_by_number(number).number = 0
+				@game.find_player_by_id(number).id = 0
 			end
 			
 			if line.include? "Kill"
@@ -47,9 +47,9 @@ class Log
 				numbers = line.partition("Kill:").last.scan(/\d+/)
 				
 				if numbers[0].to_i == 1022
-					@game.find_player_by_number(numbers[1]).minus_kill
+					@game.find_player_by_id(numbers[1]).minus_kill
 				else
-					@game.find_player_by_number(numbers[0]).add_kill
+					@game.find_player_by_id(numbers[0]).add_kill
 				end
 				
 				numbers[2] = numbers[2].to_i

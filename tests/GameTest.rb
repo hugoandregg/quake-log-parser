@@ -19,8 +19,8 @@ class GameTest < Test::Unit::TestCase
 		assert_equal(1, @game.total_kills)
 	end
 
-	def test_find_player_by_number_without_players
-		assert_equal(nil, @game.find_player_by_number(2))
+	def test_find_player_by_id_without_players
+		assert_equal(nil, @game.find_player_by_id(2))
 	end
 
 	def test_find_player_by_name_without_players
@@ -49,13 +49,13 @@ class GameTest < Test::Unit::TestCase
 		@game.add_player(Player.new(2, "zeh"))
 		@game.add_player(Player.new(3, "zah"))
 		@game.add_player(Player.new(4, "zuh"))
-		assert_equal(2, @game.find_player_by_name("zeh").number)
+		assert_equal(2, @game.find_player_by_name("zeh").id)
 	end
 
-	def test_find_player_by_number
+	def test_find_player_by_id
 		@game.add_player(Player.new(2, "zeh"))
 		@game.add_player(Player.new(3, "zah"))
 		@game.add_player(Player.new(4, "zuh"))
-		assert_equal("zeh", @game.find_player_by_number(2).name)
+		assert_equal("zeh", @game.find_player_by_id(2).name)
 	end
 end
